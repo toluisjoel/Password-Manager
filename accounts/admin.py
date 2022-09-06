@@ -1,8 +1,15 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser
+from password_manager.models import Website
+from .forms import CustomUserCreationForm, CustomUserChangeForm
+
+
+class WebsiteInline(admin.TabularInline):
+    model = Website
+    extra = 1
+
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
@@ -27,6 +34,8 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('username', 'email', 'avatar', 'password1', 'password2', 'is_staff', 'is_active')}
          ),
     )
+    
+    inlines = [WebsiteInline]
 
 
 admin.site.register(CustomUser, CustomUserAdmin)

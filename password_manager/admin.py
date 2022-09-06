@@ -1,16 +1,20 @@
 from django.contrib import admin
-from .models import Website, WebitePassword
+from .models import Website, SiteDetail
 
 # Register your models here.
 
+class SiteDetailline(admin.TabularInline):
+    model = SiteDetail
+    extra = 1
 
 class WebsiteAdmin(admin.ModelAdmin):
-    list_display = ('website',)
+    list_display = ('user', 'website',)
+    inlines = [SiteDetailline]
 
 
-class WebitePasswordAdmin(admin.ModelAdmin):
-    list_display = ('user', 'user_name', 'link', 'updated_at')
+class SiteDetailsAdmin(admin.ModelAdmin):
+    list_display = ('username', 'website', 'updated_at')
 
 
 admin.site.register(Website, WebsiteAdmin)
-admin.site.register(WebitePassword ,WebitePasswordAdmin)
+admin.site.register(SiteDetail ,SiteDetailsAdmin)
