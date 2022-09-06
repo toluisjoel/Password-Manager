@@ -1,13 +1,11 @@
-from django.shortcuts import render
-from .models import Website, WebitePassword
 from django.views import generic
+from django.shortcuts import render
+from accounts.models import CustomUser
+from .models import Website
 
-
-class WebsiteList(generic.ListView):
-    model = WebitePassword
-    context_object_name = 'user_details'
+class WebsiteListView(generic.ListView):
+    context_object_name = 'websites'
     template_name = 'main.html'
     
-    # def get_queryset(self):
-    #     # name = Website.objects.filter(self.user_name)
-    #     return Website.objects.filter(user_name__iexact='Google')
+    def get_queryset(self):
+        return CustomUser.objects.get(username=self.request.user).websites.filter(user=self.request.user)

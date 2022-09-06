@@ -1,8 +1,13 @@
-{% for detail in user_details %}
-    <div style="border:2px solid black; margin:30px; padding:10px">
-        <h5>Site: {{ detail.link }}</h5>
+{% for website in websites %}
+    <div style="border: 2px solid black; margin: 50px; padding:20px">
+        <h4>{{website}}</h4>
         <hr>
-        <p><em>Username</em>: {{ detail.user_name }}</p>
-        <p><em>Password</em>: {{ detail.password }}</p>
+        {% with details=website.details.all %}
+            {% for detail in details %}
+                <p>username: <i><b>{{detail.username}}</b></i></p>
+                <p>password: <i><b>{{detail.password}}</b></i></p>
+                <hr>
+            {% endfor %}
+        {% endwith %}
     </div>
 {% endfor %}
