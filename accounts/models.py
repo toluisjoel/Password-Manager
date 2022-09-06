@@ -1,7 +1,5 @@
-from distutils.command.upload import upload
-from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.utils.translation import gettext as _
+from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
     avatar = models.ImageField(blank=True)
