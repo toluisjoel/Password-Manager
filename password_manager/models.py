@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 
 class Website(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='details')
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='websites')
     website = models.URLField()
     
     def __str__(self):
@@ -11,7 +11,7 @@ class Website(models.Model):
 
 
 class SiteDetail(models.Model):
-    website = models.ForeignKey(Website, on_delete=models.CASCADE)
+    website = models.ForeignKey(Website, on_delete=models.CASCADE, related_name='details')
     username = models.CharField(max_length=50, blank=True)
     password = models.CharField(max_length=50)
     
