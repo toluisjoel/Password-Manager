@@ -4,9 +4,10 @@ from django.shortcuts import render
 from accounts.models import CustomUser
 from .models import SiteDetail, Website
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class WebsiteListView(generic.ListView):
+class WebsiteListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'websites'
     template_name = 'main.html'
     
