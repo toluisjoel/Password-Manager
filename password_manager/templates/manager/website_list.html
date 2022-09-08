@@ -1,0 +1,19 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+{% for website in websites %}
+<div class="m-5 p-3 shadow">
+    <h4>{{website}}</h4>
+    <hr>
+    {% with details=website.details.all %}
+    {% for detail in details %}
+    <p>username: <i><b>{{detail.username}}</b></i></p>
+    <p>password: <i><b>{{detail.password}}</b></i></p>
+    <hr>
+    {% endfor %}
+    {% endwith %}
+</div>
+{% endfor %}
+
+{% endblock %}

@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 class WebsiteListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'websites'
-    template_name = 'main.html'
+    template_name = 'manager/website_list.html'
     
     def get_queryset(self):
         return CustomUser.objects.get(username=self.request.user).websites.filter(user=self.request.user)
@@ -33,4 +33,4 @@ def same_password(request):
         'sites': sites_deets,
     }
     
-    return render(request, 'related_password.html', context)
+    return render(request, 'manager/related_password.html', context)

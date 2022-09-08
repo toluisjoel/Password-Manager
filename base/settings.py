@@ -31,15 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'password_manager.apps.PasswordManagerConfig',
+    'accounts.apps.AccountsConfig',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    'password_manager.apps.PasswordManagerConfig',
-    'accounts.apps.AccountsConfig',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
