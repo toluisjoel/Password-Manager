@@ -9,6 +9,7 @@ class SiteDetailline(admin.TabularInline):
 
 class WebsiteAdmin(admin.ModelAdmin):
     list_display = ('user', 'website',)
+    search_fields = ('website',)
     inlines = [SiteDetailline]
 
 

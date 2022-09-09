@@ -51,9 +51,7 @@
                         <button type="submit" class="btn btn-outline-warning">Search</button>
                     </form>
 
-                    <button class="btn btn-warning rounded-pill d-flex mx-2">
-                        <a class="nav-link" aria-current="page" href="">Add password +</a>
-                    </button>
+                    <a class="btn btn-warning rounded-pill d-flex mx-2" href="{% url 'manager:add_password' %}">Add password +</a>
                 {% endif %}
             </div>
         </div>

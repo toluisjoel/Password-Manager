@@ -6,6 +6,11 @@ class Website(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='websites')
     website = models.URLField()
     
+    # def save(self, *args, **kwargs):
+    #     if (self.website).startswith('http://'):
+    #         self.website = (self.website).replace('http://', 'https://')
+    #     super(Website, self).save(*args, **kwargs)
+    
     def __str__(self):
         return self.website
 
