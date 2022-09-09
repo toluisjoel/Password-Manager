@@ -11,6 +11,9 @@ class Website(models.Model):
     #         self.website = (self.website).replace('http://', 'https://')
     #     super(Website, self).save(*args, **kwargs)
     
+    class Meta:
+        unique_together = 'user', 'website'
+    
     def __str__(self):
         return self.website
 
@@ -26,6 +29,7 @@ class SiteDetail(models.Model):
     
     class Meta:
         ordering = ('-updated_at',)
+        unique_together = 'website', 'username', 'password'
     
     def __str__(self):
         return self.username

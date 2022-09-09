@@ -3,28 +3,31 @@
 
 {% block content %}
 
-<div class="container mt-5">
+<div class="container-md mt-5">
+    <h1 class="display-6">Welcome {{user.username.capitalize}},</h1>
     {% if websites %}
         {% for website in websites %}
-            <div class="border rounded-3 align-items-center row p-3 my-4">
-                <h5 class="col-10">{{website}}</h5>
-                <h6 class="col-1">{{website.details.count}} user{{website.details.count|pluralize}}</h6>
-                
-                <button class="btn btn-primary col-1 more_less" data-bs-toggle="collapse"
-                data-bs-target="#c{{website.id}}" role="button" aria-expanded="false" aria-controls="c{{website.id}}">view</button>
-                <!-- <a href="" class="btn btn-danger col-1">delete</a> -->
+            {% if website.details.count > 0 %}
+                <div class="border rounded-3 align-items-center row p-3 my-4">
+                    <h6 class="col-lg-9 col-md-9 col-sm-2">{{website}}</h6>
+                    <h6 class="col-lg-2 col-md-2 col-sm-2">{{website.details.count}}</h6>
+                    
+                    <button class="btn btn-primary col-lg-1 col-md-1 col-sm-2 more_less" data-bs-toggle="collapse"
+                    data-bs-target="#c{{website.id}}" role="button" aria-expanded="false" aria-controls="c{{website.id}}">view</button>
+                    <!-- <a href="" class="btn btn-danger col-1">delete</a> -->
 
-                {% with details=website.details.all %}
-                {% for detail in details %}
-                    <div class="collapse mt-3" id="c{{website.id}}">
-                        <div class="card card-body">
-                                    <p>username: <i><b>{{detail.username}}</b></i></p>
-                                    <p>password: <i><b>{{detail.password}}</b></i></p>
+                    {% with details=website.details.all %}
+                    {% for detail in details %}
+                        <div class="collapse mt-3" id="c{{website.id}}">
+                            <div class="card card-body">
+                                <p>username: <i><b>{{detail.username}}</b></i></p>
+                                <p>password: <i><b>{{detail.password}}</b></i></p>
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
-                {% endwith %}
-            </div>
+                    {% endfor %}
+                    {% endwith %}
+                </div>
+            {% endif %}
         {% endfor %}
 
 {% else %}

@@ -14,7 +14,7 @@ class WebsiteAdmin(admin.ModelAdmin):
 
 
 class SiteDetailsAdmin(admin.ModelAdmin):
-    list_display = ('username', 'website', 'updated_at')
+    list_display = ('user', 'username', 'website', 'updated_at')
 
 
 admin.site.register(Website, WebsiteAdmin)

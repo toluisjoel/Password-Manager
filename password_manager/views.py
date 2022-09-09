@@ -39,28 +39,32 @@ def same_password(request):
 @login_required
 def add_password(request):
     if request.method == 'POST':
+        weblink_form = AddSiteForm(request.POST)
         password_form = AddPasswordForm(request.POST)
-        website_form = AddSiteForm(request.POST)
 
-        if password_form.is_valid() and website_form.is_valid():
-            website_form.clean()
-            new_dets = password_form.save(commit=False)
-            new_site = website_form.save(commit=False)
+        if weblink_form.is_valid() and password_form.is_valid():
+            website_link = weblink_form.save(commit=False)
+            site_password = password_form.save(commit=False)
             
-            new_dets.user = request.user
-            new_site.user = request.user
-            new_dets.website = website_form.save()
+            website_link.user = request.user
+            site_password.user = request.user
             
-            password_form.save()
-            
+            if Website.objects.filter(website=website_link).exists():
+                site_password.website = Website.objects.get(user=request.user, website=website_link)
+            else:
+                site_password.website = weblink_form.save()
+                
+            site_password.save()
+                
+             
         return redirect(reverse('manager:home'))
 
     else:
+        weblink_form = AddSiteForm()
         password_form = AddPasswordForm()
-        website_form = AddSiteForm()
 
     context = {
+        'weblink_form': weblink_form,
         'password_form': password_form,
-        'website_form': website_form,
     }
     return render(request, 'password_manager/add_password.html', context)
