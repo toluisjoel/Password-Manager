@@ -1,23 +1,24 @@
 from django.urls import reverse
 from django.views import generic
 from django.shortcuts import render, redirect
-from accounts.models import CustomUser
 from .models import SiteDetail, Website
 from .forms import AddPasswordForm, AddSiteForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 
 
 class WebsiteListView(LoginRequiredMixin, generic.ListView):
+    model = Website
     context_object_name = 'websites'
     
     def get_queryset(self):
-        return CustomUser.objects.get(username=self.request.user).websites.filter(user=self.request.user)
+        return User.objects.get(username=self.request.user).websites.filter(user=self.request.user)
   
  
 @login_required
 def same_password(request):
-    user = CustomUser.objects.get(username=request.user)
+    user = request.user
     site_details = user.details.all()
     passwords =  dict()
     

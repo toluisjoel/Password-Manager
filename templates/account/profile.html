@@ -1,11 +1,38 @@
-{% extends "main.html" %}
-{% block title %}Dashboard{% endblock %}
+{% extends "main.html" %}ß
+{% block title %} Dashboard{% endblock %}
+{% load static %}
+
 {% block content %}
 
-<h1>Dashboard</h1>
-<p>Welcome to your dashboard.</p>
-<p>Hello {{ request.user }} {{ request.user.username }}</p>
-<p>You can <a href="{% url 'account:edit' %}">edit your profile</a> or <a href="{% url "password_change" %}">change your password</a>.</p>
-<a href="{% url 'account:logout' %}">Logout</a>
+<div class="container">
+    <h1 style="font-family: Inter, sans-serif;">PROFILE</h1>
+
+    <div class="row row-cols-1 row-cols-lg-2 row-cols-md-1">
+        <div class="col">
+            <figure class="py-5" style="min-height: 420px;">
+                <!-- <img src="{{request.user.avatar.url}}" alt="profile-photo" class="avatar"> -->
+                <img src="{% static 'images/waves.png' %}" class="img-fluid rounded-5 mx-atuo">
+            </figure>
+
+            <div class="px-5">
+                <h2><b>@{{request.user.username}}</b></h2>
+                <span><b>{{request.user.first_name}} {{request.user.last_name}}</b></span>
+            </div>
+        </div>
+
+        <div class="col p-5">
+            <div class="row">
+                <a class='btn btn-lg border border-2 border-warning my-2' 
+                    href="{% url 'accounts:edit_profile' %}">Edit your profile</a>
+                <a class='btn btn-lg border border-2 border-warning my-2'
+                    href="">Manage Passwords</a>
+                <a class='btn btn-lg border border-2 border-warning my-2' 
+                    href="">Invite a friend</a>
+                <a class='btn btn-lg btn-danger my-2' 
+                    href="">Delete account</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

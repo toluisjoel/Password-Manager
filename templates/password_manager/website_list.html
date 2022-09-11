@@ -4,12 +4,16 @@
 {% block content %}
 
 <div class="container-md mt-5">
-    <h1 class="display-6">Welcome {{user.username.capitalize}},</h1>
+    {% if user.first_name %}
+        <h1 class="display-6">Welcome {{user.first_name.capitalize}},</h1>
+    {% else %}
+        <h1 class="display-6"><b><i>{{user.username}}</i></b> <span style="color: gray;">dashboard</span></h1>
+    {% endif %}
     {% if websites %}
         {% for website in websites %}
             {% if website.details.count > 0 %}
                 <div class="border rounded-3 align-items-center row p-3 my-4">
-                    <h6 class="col-lg-9 col-md-9 col-sm-2">{{website}}</h6>
+                    <h6 class="col-lg-9 col-md-9 col-sm-8">{{website}}</h6>
                     <h6 class="col-lg-2 col-md-2 col-sm-2">{{website.details.count}}</h6>
                     
                     <button class="btn btn-primary col-lg-1 col-md-1 col-sm-2 more_less" data-bs-toggle="collapse"
