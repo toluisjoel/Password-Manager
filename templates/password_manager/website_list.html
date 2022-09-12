@@ -12,20 +12,32 @@
     {% if websites %}
         {% for website in websites %}
             {% if website.details.count > 0 %}
-                <div class="border rounded-3 align-items-center row p-3 my-4">
-                    <h6 class="col-lg-9 col-md-9 col-sm-8">{{website}}</h6>
-                    <h6 class="col-lg-2 col-md-2 col-sm-2">{{website.details.count}}</h6>
-                    
-                    <button class="btn btn-primary col-lg-1 col-md-1 col-sm-2 more_less" data-bs-toggle="collapse"
-                    data-bs-target="#c{{website.id}}" role="button" aria-expanded="false" aria-controls="c{{website.id}}">view</button>
-                    <!-- <a href="" class="btn btn-danger col-1">delete</a> -->
+                <div class="row border border-2 align-items-center rounded-3 my-4 p-3">
+                    <h6 class="col-lg-8 col-md-8 col-sm-8">{{website}}</h6>
+                    <h6 class="col-lg-2 col-md-2 col-sm-2">{{website.details.count}}</h6> <!-- d-lg-block d-md-block d-sm-none -->
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <button class="btn btn-primary more_less w-100" data-bs-toggle="collapse"
+                        data-bs-target="#c{{website.id}}" role="button" aria-expanded="false" aria-controls="c{{website.id}}">view</button>
+                    </div>
 
                     {% with details=website.details.all %}
                     {% for detail in details %}
                         <div class="collapse mt-3" id="c{{website.id}}">
                             <div class="card card-body">
-                                <p>username: <i><b>{{detail.username}}</b></i></p>
-                                <p>password: <i><b>{{detail.password}}</b></i></p>
+                                <div class="row">
+                                    <div class="col-lg-8 col-sm-12">
+                                        <p>username: <i><b>{{detail.username}}</b></i></p>
+                                        <p>password: <i><b>{{detail.password}}</b></i></p>
+                                    </div>
+
+                                    <div class="col-lg-2 col-sm-12 my-2">
+                                        <a href="" class="btn btn-outline-dark w-100">Edit</a>
+                                    </div>
+
+                                    <div class="col-lg-2 col-sm-12 my-2">
+                                        <a href="" class="btn btn-outline-danger w-100">Delete</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}
