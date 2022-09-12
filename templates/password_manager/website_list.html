@@ -47,6 +47,8 @@
             {% endif %}
         {% endfor %}
 
+        <a href="{% url 'manager:add_password' %}" class="btn btn-warning mx-auto">Add Password +</a>
+
 {% else %}
         <div class="container justify-content-center">
             <h1 class="text-center m-auto">No Sites Available!</h1>
