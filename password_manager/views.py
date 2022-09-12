@@ -1,11 +1,11 @@
-from django.urls import reverse, reverse_lazy
 from django.views import generic
-from django.shortcuts import render, redirect
 from .models import SiteDetail, Website
+from django.contrib.auth.models import User
+from django.urls import reverse, reverse_lazy
+from django.shortcuts import render, redirect
 from .forms import AddPasswordForm, AddSiteForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 
 
 class WebsiteListView(LoginRequiredMixin, generic.ListView):

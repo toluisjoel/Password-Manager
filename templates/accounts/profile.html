@@ -25,11 +25,11 @@
                 <a class='btn btn-lg border border-2 border-warning my-2' 
                     href="{% url 'accounts:edit_profile' %}">Edit your profile</a>
                 <a class='btn btn-lg border border-2 border-warning my-2'
-                    href="">Manage Passwords</a>
-                <a class='btn btn-lg border border-2 border-warning my-2' 
-                    href="">Invite a friend</a>
+                    href="{% url 'accounts:edit_profile' %}">Manage Passwords</a>
+                <button class='btn btn-lg btn-disabled border border-2 border-warning my-2' 
+                    href="" disabled>Invite a friend</button>
                 <a class='btn btn-lg btn-danger my-2' 
-                    href="">Delete account</a>
+                    href="{% url 'accounts:delete_account' request.user.pk %}">Delete account</a>
             </div>
         </div>
     </div>
