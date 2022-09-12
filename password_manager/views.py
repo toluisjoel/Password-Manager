@@ -1,4 +1,4 @@
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.shortcuts import render, redirect
 from .models import SiteDetail, Website
@@ -50,9 +50,9 @@ def add_password(request):
             website_link.user = request.user
             site_password.user = request.user
             
-            if Website.objects.filter(website=website_link).exists():
+            try:
                 site_password.website = Website.objects.get(user=request.user, website=website_link)
-            else:
+            except:
                 site_password.website = weblink_form.save()
                 
             site_password.save()
@@ -69,3 +69,9 @@ def add_password(request):
         'password_form': password_form,
     }
     return render(request, 'password_manager/add_password.html', context)
+
+
+class DeletePasswordtView(LoginRequiredMixin, generic.DeleteView):
+    model = SiteDetail
+    template_name = 'password_manager/delete_password.html'
+    success_url = reverse_lazy('manager:home')
