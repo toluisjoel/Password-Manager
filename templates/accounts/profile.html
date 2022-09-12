@@ -11,7 +11,7 @@
         <div class="col">
             <figure class="py-5" style="min-height: 420px;">
                 <!-- <img src="{{request.user.avatar.url}}" alt="profile-photo" class="avatar"> -->
-                <img src="{% static 'images/waves.png' %}" class="img-fluid rounded-5 mx-atuo">
+                <img src="{{request.user.profile.avatar.url}}" class="img-fluid rounded-5 mx-atuo">
             </figure>
 
             <div class="px-5">
