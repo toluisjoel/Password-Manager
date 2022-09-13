@@ -1,0 +1,8 @@
+add design for some pages
+    - Images to explain page functions better when empty
+validate unique accounts without error
+add email smtp (mailjet)
+Invite a friend feature
+"Invite a friend" feature
+Profile picture thumbnail
+Search feature

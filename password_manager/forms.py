@@ -15,8 +15,8 @@ class AddSiteForm(forms.ModelForm):
     
     class Meta:
         model = Website
-        fields = ('website',)
+        fields = ('link',)
         
         widgets = {
-            'website': forms.TextInput(),
+            'link': forms.TextInput(),
         }

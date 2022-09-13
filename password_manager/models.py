@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 class Website(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='websites')
-    website = models.URLField()
+    link = models.URLField()
     
     # def save(self, *args, **kwargs):
     #     if (self.website).startswith('http://'):
@@ -12,10 +12,10 @@ class Website(models.Model):
     #     super(Website, self).save(*args, **kwargs)
     
     class Meta:
-        unique_together = 'user', 'website'
+        unique_together = 'user', 'link'
     
     def __str__(self):
-        return self.website
+        return self.link
 
 
 class SiteDetail(models.Model):

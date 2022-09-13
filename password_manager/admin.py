@@ -3,19 +3,16 @@ from .models import Website, SiteDetail
 
 # Register your models here.
 
+
 class SiteDetailline(admin.TabularInline):
     model = SiteDetail
     extra = 1
 
+
 class WebsiteAdmin(admin.ModelAdmin):
-    list_display = ('user', 'website',)
-    search_fields = ('website',)
+    list_display = ('user', 'link',)
+    search_fields = ('link',)
     inlines = [SiteDetailline]
 
 
-class SiteDetailsAdmin(admin.ModelAdmin):
-    list_display = ('user', 'username', 'website', 'updated_at')
-
-
 admin.site.register(Website, WebsiteAdmin)
-admin.site.register(SiteDetail ,SiteDetailsAdmin)
