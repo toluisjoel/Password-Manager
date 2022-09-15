@@ -13,7 +13,7 @@ class WebsiteListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'websites'
 
     def get_queryset(self):
-        return User.objects.get(username=self.request.user).websites.filter(user=self.request.user)
+        return Website.objects.filter(user=self.request.user)
 
 
 @login_required
@@ -51,8 +51,7 @@ def add_password(request):
             site_password.user = request.user
 
             try:
-                site_password.website = Website.objects.get(
-                    user=request.user, website=website_link)
+                site_password.website = Website.objects.get(user=request.user, link=website_link)
             except:
                 site_password.website = weblink_form.save()
 

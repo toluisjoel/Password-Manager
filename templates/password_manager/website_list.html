@@ -10,7 +10,11 @@
         {% else %}
             <h1 class="display-6"><b><i>{{user.username}}</i></b> <span style="color: gray;">dashboard</span></h1>
         {% endif %}
-
+        
+        <form class="d-flex mt-5" role="search">
+            <input class="form-control form-control-lg me-2" type="search" placeholder="Search sites..." aria-label="Search">
+            <button type="submit" class="btn btn-lg btn-outline-warning">Search</button>
+        </form>
         {% for website in websites %}
             {% if website.details.count > 0 %}
                 <div class="row border border-2 align-items-center rounded-3 my-4 p-3">

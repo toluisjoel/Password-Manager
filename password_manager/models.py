@@ -12,6 +12,7 @@ class Website(models.Model):
     #     super(Website, self).save(*args, **kwargs)
     
     class Meta:
+        ordering = ['-link']
         unique_together = 'user', 'link'
     
     def __str__(self):
