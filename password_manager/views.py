@@ -19,19 +19,19 @@ class WebsiteListView(LoginRequiredMixin, generic.ListView):
 @login_required
 def same_password(request):
     user = request.user
-    site_details = user.details.all()
-    passwords = dict()
+    site_password = user.details.all()
+    passwords = {}
 
-    for details in site_details:
+    for details in site_password:
         passwords.setdefault(details.password, []).append([details.username, details.website])
 
-    sites_deets = {}
+    same_password = {}
     for password, sites in passwords.items():
         if len(sites) > 1:
-            sites_deets.setdefault(password, sites)
+            same_password.setdefault(password, sites)
 
     context = {
-        'sites': sites_deets,
+        'sites': same_password,
     }
 
     return render(request, 'password_manager/related_password.html', context)

@@ -27,7 +27,7 @@ class WebsiteIndexViewTests(TestCase):
         self.client = Client()
         self.user = User.objects.create_user(username='john', password='smith')
 
-    def test_no_website(self):
+    def test_no_website_exists(self):
         """
         If no website exist, an appropriate message is displayed.
         """
@@ -41,7 +41,7 @@ class WebsiteIndexViewTests(TestCase):
         """
         Websites created displays on the home page.
         """
-        website = create_website('tolu.com')
+        website = create_website('test.com')
         self.client.login(username='john', password='smith')
         response = self.client.get(reverse('manager:home'))
         self.assertQuerysetEqual(response.context['websites'], [website])
@@ -50,27 +50,27 @@ class WebsiteIndexViewTests(TestCase):
         """
         The home page may display multiple website
         """
-        website_1 = create_website('example.com')
-        website_2 = create_website('example2.com')
+        website_1 = create_website('test.com')
+        website_2 = create_website('test2.com')
         self.client.login(username='john', password='smith')
         response = self.client.get(reverse('manager:home'))
         self.assertQuerysetEqual(response.context['websites'], [website_2, website_1])
 
-    def test_no_website_details(self):
+    def test_website_has_no_details(self):
         """
         Websites wihtout details does not displays on the home page.
         """
-        website = create_website('b.com')
+        website = create_website('test.com')
         self.client.login(username='john', password='smith')
         response = self.client.get(reverse('manager:home'))
         for site in response.context['websites']:
             self.assertQuerysetEqual(site.details.all(), [])
 
-    def test_website_details(self):
+    def test_website_has_details(self):
         """
         Websites with details displays on the home page.
         """
-        website = create_website('b.com')
+        website = create_website('test.com')
         detail = create_site_details('thomas', 'joel', website)
         self.client.login(username='john', password='smith')
         response = self.client.get(reverse('manager:home'))
