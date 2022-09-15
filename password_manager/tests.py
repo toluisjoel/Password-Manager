@@ -58,13 +58,15 @@ class WebsiteIndexViewTests(TestCase):
 
     def test_website_has_no_details(self):
         """
-        Websites wihtout details does not displays on the home page.
+        Websites wihtout details does not displays on the home page,
+        an appropriate message is displayed.
         """
         website = create_website('test.com')
         self.client.login(username='john', password='smith')
         response = self.client.get(reverse('manager:home'))
         for site in response.context['websites']:
             self.assertQuerysetEqual(site.details.all(), [])
+        self.assertContains(response, 'No Sites Available')
 
     def test_website_has_details(self):
         """
