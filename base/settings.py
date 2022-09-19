@@ -135,3 +135,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'manager:home'
 LOGIN_URL = 'accounts:login'
 LOGOUT_URL = 'accounts:logout'
+
+ENCRYPTION_KEY = b'JErn1LXc1Tym0lW2yewLzPK90fyNk1q0ruaKrGqg1r0='

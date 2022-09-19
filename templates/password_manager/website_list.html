@@ -32,7 +32,7 @@
                                 <div class="row">
                                     <div class="col-lg-8 col-sm-12">
                                         <p>username: <i><b>{{detail.username}}</b></i></p>
-                                        <p>password: <i><b>{{detail.password}}</b></i></p>
+                                        <p>password: <i><b>{{detail.decrypt_password}}</b></i></p>
                                     </div>
 
                                     <div class="col-lg-2 col-sm-12 my-2">
@@ -60,16 +60,7 @@
         {% endfor %}
 
         <a href="{% url 'manager:add_password' %}" class="btn btn-warning mx-auto">Add Password +</a>
-
-{% else %}
-        <div class="container justify-content-center">
-            <h1 class="text-center m-auto">No Sites Available!</h1>
-            <img src="{% static 'images/waves.png' %}" class="w-50 h-50 my-2 img-fluid">
-            <div>
-                <a class="btn btn-lg btn-warning rounded-pill" href="{% url 'manager:add_password' %}">Add Details +</a>
-            </div>
-        </div>
-{% endif %}
+    {% endif %}
 </div>
 
 {% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from .encryption import decrypt
 
 
 class Website(models.Model):
@@ -32,6 +33,9 @@ class SiteDetail(models.Model):
         ordering = ('-updated_at',)
         unique_together = 'website', 'username', 'password'
     
+    def decrypt_password(self):
+        return decrypt(self.password)
+    
     def __str__(self):
         return self.username
-    
+

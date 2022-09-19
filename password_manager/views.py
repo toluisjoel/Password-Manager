@@ -1,6 +1,6 @@
 from django.views import generic
 from .models import SiteDetail, Website
-from django.contrib.auth.models import User
+from .encryption import encrypt
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect
 from .forms import AddPasswordForm, AddSiteForm
@@ -49,6 +49,7 @@ def add_password(request):
 
             website_link.user = request.user
             site_password.user = request.user
+            site_password.password = encrypt(site_password.password)
 
             try:
                 site_password.website = Website.objects.get(user=request.user, link=website_link)

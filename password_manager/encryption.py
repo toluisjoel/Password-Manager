@@ -1,45 +1,27 @@
-import rsa
 import base64
+import logging
+from django.conf import settings
+from cryptography .fernet import Fernet
 
 
-class EncryptDecrypt:
-    def __init__(self):
-        self.publicKey, self.privateKey = rsa.newkeys(512)
+def encrypt(password):
+    try:
+        password = str(password)
+        cipher = Fernet(settings.ENCRYPTION_KEY)
+        encrypt_password = cipher.encrypt(password.encode('ascii'))
+        encrypt_password = base64.urlsafe_b64encode(encrypt_password).decode('ascii')
 
-    def encrypt(self, password):
-        encMessage = rsa.encrypt(password.encode(), self.publicKey)
-
-        return encMessage
-
-    def decrypt(self, password):
-        # encMessage = rsa.encrypt(password.encode(), self.publicKey)
-        encMessage = base64.b64decode(password).decode("ASCII")
-        decMessage = rsa.decrypt(encMessage, self.privateKey).decode()
-
-        return encMessage
+        return encrypt_password
+    except:
+        return None
 
 
-# a = EncryptDecrypt()
-# print(a.encrypt('tolu'))
-# print(a.decrypt())
+def decrypt(password):
+    try:
+        password = base64.urlsafe_b64decode(password)
+        cipher = Fernet(settings.ENCRYPTION_KEY)
+        decode_password = cipher.decrypt(password).decode('ascii')
 
-
-#!/usr/bin/env python3
-
-# from Crypto.PublicKey import RSA
-# from Crypto import Random
-# import base64
-
-# key_pair = RSA.generate(1024, Random.new().read(1024 // 8))
-# public_key = key_pair.publickey()
-
-# secret = "123456"
-
-# enc_secret = public_key.encrypt(secret.encode("utf-8"), 32)[0]
-# enc_secret_b64 = base64.b64encode(enc_secret)
-# print(enc_secret_b64)
-
-# enc_secret = base64.b64decode(enc_secret_b64)
-# secret = key_pair.decrypt(enc_secret)
-# print(secret.decode("utf-8"))
-# 123456
+        return decode_password
+    except:
+        return None
