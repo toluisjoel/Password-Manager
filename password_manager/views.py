@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from .forms import AddPasswordForm, AddSiteForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count
 
 
 class WebsiteListView(LoginRequiredMixin, generic.ListView):
@@ -13,8 +14,20 @@ class WebsiteListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'websites'
 
     def get_queryset(self):
-        return Website.objects.filter(user=self.request.user)
-
+        """
+        Return website only if website has details,
+        and delete those without details.
+        """        
+        websites = Website.objects.filter(user=self.request.user)
+        websites_with_details = []
+        for website in websites:
+            website_details = website.details.all()
+            if website_details.count() > 0:
+                websites_with_details.append(website.id)
+            else:
+                Website.objects.get(id=website.id).delete()
+                
+        return Website.objects.filter(id__in=websites_with_details)
 
 @login_required
 def same_password(request):
