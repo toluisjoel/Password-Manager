@@ -37,28 +37,21 @@ class WebsiteIndexViewTests(TestCase):
         self.assertContains(response, 'No Sites Available')
         self.assertQuerysetEqual(response.context['websites'], [])
 
-    def test_website_exists(self):
-        """
-        Websites created displays on the home page.
-        """
-        website = create_website('test.com')
-        self.client.login(username='john', password='smith')
-        response = self.client.get(reverse('manager:home'))
-        self.assertQuerysetEqual(response.context['websites'], [website])
-
     def test_mutiple_website_exists(self):
         """
-        The home page may display multiple website
+        The home page may displays multiple websites
         """
         website_1 = create_website('test.com')
         website_2 = create_website('test2.com')
+        create_site_details('thomas', 'joel', website_1)
+        create_site_details('thomas', 'joel', website_2)
         self.client.login(username='john', password='smith')
         response = self.client.get(reverse('manager:home'))
         self.assertQuerysetEqual(response.context['websites'], [website_2, website_1])
 
     def test_website_has_no_details(self):
         """
-        Websites wihtout details does not displays on the home page,
+        Websites wihtout details does not display on the home page,
         an appropriate message is displayed.
         """
         website = create_website('test.com')
