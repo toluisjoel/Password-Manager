@@ -18,7 +18,7 @@ class WebsiteList(LoginRequiredMixin, generic.ListView):
         Return website only if website has details,
         and delete those without details.
         """
-        websites = Website.objects.filter(user=self.request.users)
+        websites = Website.objects.filter(user=self.request.user)
         websites_with_details = []
         for website in websites:
             website_details = website.details.all()
