@@ -11,7 +11,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
+from environs import Env
 from pathlib import Path
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#bzft6m!1d0@&e1xu-9e-wg48a*#+0@+to^s39_f9sc4!qr=tw'
+SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -136,4 +140,5 @@ LOGIN_REDIRECT_URL = 'manager:home'
 LOGIN_URL = 'accounts:login'
 LOGOUT_URL = 'accounts:logout'
 
-ENCRYPTION_KEY = b'JErn1LXc1Tym0lW2yewLzPK90fyNk1q0ruaKrGqg1r0='
+ENCRYPTION_KEY = env.str('ENCRYPTION_KEY')
+ENCRYPTION_KEY = ENCRYPTION_KEY.encode()
