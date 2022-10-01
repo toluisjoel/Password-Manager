@@ -1,15 +1,15 @@
 from django.views import generic
-from .models import SiteDetail, Website
-from .encryption import encrypt
-from django.urls import reverse, reverse_lazy
-from django.shortcuts import render, redirect
-from .forms import AddPasswordForm, AddSiteForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Count
+from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
+
+from .encryption import encrypt
+from .forms import AddPasswordForm, AddSiteForm
+from .models import SiteDetail, Website
 
 
-class WebsiteListView(LoginRequiredMixin, generic.ListView):
+class WebsiteList(LoginRequiredMixin, generic.ListView):
     model = Website
     context_object_name = 'websites'
 
@@ -17,8 +17,8 @@ class WebsiteListView(LoginRequiredMixin, generic.ListView):
         """
         Return website only if website has details,
         and delete those without details.
-        """        
-        websites = Website.objects.filter(user=self.request.user)
+        """
+        websites = Website.objects.filter(user=self.request.users)
         websites_with_details = []
         for website in websites:
             website_details = website.details.all()
@@ -26,11 +26,28 @@ class WebsiteListView(LoginRequiredMixin, generic.ListView):
                 websites_with_details.append(website.id)
             else:
                 Website.objects.get(id=website.id).delete()
-                
+
         return Website.objects.filter(id__in=websites_with_details)
+
+
+class EditPassword(LoginRequiredMixin, generic.UpdateView):
+    model = SiteDetail
+    fields = ('username', 'password')
+    template_name = 'password_manager/edit_password.html'
+    success_url = reverse_lazy('manager:home')
+
+
+class DeletePassword(LoginRequiredMixin, generic.DeleteView):
+    model = SiteDetail
+    template_name = 'password_manager/delete_password.html'
+    success_url = reverse_lazy('manager:home')
+
 
 @login_required
 def same_password(request):
+    """
+    accounts with same password
+    """    
     user = request.user
     site_password = user.details.all()
     passwords = {}
@@ -82,16 +99,3 @@ def add_password(request):
         'password_form': password_form,
     }
     return render(request, 'password_manager/add_password.html', context)
-
-
-class EditPasswordView(LoginRequiredMixin, generic.UpdateView):
-    model = SiteDetail
-    fields = ('username', 'password')
-    template_name = 'password_manager/edit_password.html'
-    success_url = reverse_lazy('manager:home')
-
-
-class DeletePasswordtView(LoginRequiredMixin, generic.DeleteView):
-    model = SiteDetail
-    template_name = 'password_manager/delete_password.html'
-    success_url = reverse_lazy('manager:home')
