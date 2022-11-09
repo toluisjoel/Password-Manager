@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 
-from .encryption import encrypt
+from .encryption import encrypt, decrypt
 from .forms import AddPasswordForm, AddSiteForm
 from .models import SiteDetail, Website
 
@@ -30,11 +30,27 @@ class WebsiteList(LoginRequiredMixin, generic.ListView):
         return Website.objects.filter(id__in=websites_with_details)
 
 
-class EditPassword(LoginRequiredMixin, generic.UpdateView):
-    model = SiteDetail
-    fields = ('username', 'password')
-    template_name = 'password_manager/edit_password.html'
-    success_url = reverse_lazy('manager:home')
+def edit_password(request, pk): 
+    site_detail = SiteDetail.objects.get(id=pk)
+    if request.method == 'POST':
+        password_form = AddPasswordForm(instance=site_detail, data=request.POST)
+
+        if password_form.is_valid():
+            site_password = password_form.save(commit=False)
+            site_password.password = encrypt(site_password.password)
+            password_form.save()
+            return redirect(reverse('manager:home'))
+            
+    else:
+        password_form = AddPasswordForm(
+            instance=SiteDetail(
+                username=site_detail.username,
+                password=decrypt(site_detail.password)
+            )
+        )
+
+    context = {'form': password_form}
+    return render(request, 'password_manager/edit_password.html', context)
 
 
 class DeletePassword(LoginRequiredMixin, generic.DeleteView):

@@ -7,6 +7,6 @@ urlpatterns = [
     path('', views.WebsiteList.as_view(), name='home'),
     path('related-passwords/', views.same_password, name='same_passwords'),
     path('add-password/', views.add_password, name='add_password'),
-    path('edit-password/<str:pk>', views.EditPassword.as_view(), name='edit_password'),
-    path('delete-password/<str:pk>', views.DeletePassword.as_view(), name='delete_password'),
+    path('edit-password/<int:pk>/', views.edit_password, name='edit_password'),
+    path('delete-password/<int:pk>/', views.DeletePassword.as_view(), name='delete_password'),
 ]
